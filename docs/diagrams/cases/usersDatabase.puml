@@ -1,0 +1,35 @@
+@startuml usersDatabase
+left to right direction
+actor User as u
+rectangle "System" as system {
+    (Login)
+    (Register)
+    (View Account)
+    (Edit Billing Info)
+    (View Purchase History)
+    (Forgot Password)
+    (Deactivate Account)
+}
+rectangle "Users Database" as ud {
+    (Validate User)
+    (Add New User)
+    (Fetch Account Details)
+    (Update User Info)
+    (Remove User)
+}
+u --> (Login)
+u --> (Register)
+u --> (View Account)
+u --> (Edit Billing Info)
+u --> (View Purchase History)
+u --> (Forgot Password)
+u --> (Deactivate Account)
+(Login) --> (Validate User)
+(Register) --> (Add New User)
+(View Account) --> (Fetch Account Details)
+(Edit Billing Info) --> (Update User Info)
+(View Purchase History) --> (Fetch Account Details)
+(Forgot Password) --> (Validate User)
+(Forgot Password) --> (Update User Info)
+(Deactivate Account) --> (Validate User)
+(Deactivate Account) --> (Remove User)

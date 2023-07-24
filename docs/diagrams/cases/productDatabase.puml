@@ -1,0 +1,25 @@
+@startuml productDatabase
+left to right direction
+actor User as u
+actor Admin as a
+rectangle "System" as sys {
+    (Purchase Product)
+    (View Items)
+    (Change Product Info)
+    (List Items)
+}
+rectangle "Product Database" as pd {
+    (Remove from Inventory)
+    (Get Requested Items)
+    (Update Requested Product)
+    (Add to Inventory)
+}
+
+u --> (Purchase Product)
+u --> (View Items)
+a --> (Change Product Info)
+a --> (List Items)
+(Purchase Product) --> (Remove from Inventory)
+(View Items) --> (Get Requested Items)
+(Change Product Info) --> (Update Requested Product)
+(List Items) --> (Add to Inventory)
