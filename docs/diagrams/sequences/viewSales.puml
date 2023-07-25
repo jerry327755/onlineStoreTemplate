@@ -1,0 +1,18 @@
+@startuml viewSales
+actor Manager
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Manager -> system: View Sales
+activate system
+system -> auth: admin_is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: view_sales_data()
+activate pdb
+pdb --> system: List of all sold items and their details
+deactivate pdb
+system --> system: Sum up total of sales
+system -> system: Display list of sales and total
+@enduml 

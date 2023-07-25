@@ -1,9 +1,9 @@
 @startuml register
-actor Customer
+actor User
 boundary "System" as system
 control "sessions" as sessions
 database "Database" as db 
-Customer -> system: Register
+User -> system: Register
 activate system
 system -> db: add_new_user(username, password, email)
 activate db

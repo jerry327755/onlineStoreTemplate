@@ -1,0 +1,18 @@
+@startuml editPrice
+actor Manager
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Manager -> system: Edit Product Price
+activate system
+system -> auth: admin_is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: edit_product_price(product_id, new_price)
+activate pdb
+pdb -> pdb: Update product
+pdb --> system: Updated product details
+deactivate pdb
+system -> system: Display updated product details
+@enduml 

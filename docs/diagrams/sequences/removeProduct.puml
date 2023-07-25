@@ -1,0 +1,18 @@
+@startuml removeProduct
+actor Manager
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Manager -> system: Remove Product
+activate system
+system -> auth: admin_is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: remove_product(product_id)
+activate pdb
+pdb -> pdb: Update products
+pdb --> system: True
+deactivate pdb
+system -> system: Display success message
+@enduml 

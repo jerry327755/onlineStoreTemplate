@@ -1,0 +1,17 @@
+@startuml viewOrders
+actor Customer
+boundary "System" as system
+control "authentication" as auth 
+Database "User Database" as udb 
+Customer -> system: View Orders
+activate system
+system -> auth: is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> udb: view_past_orders(username)
+activate udb
+udb --> system: Past Orders
+deactivate udb
+system -> system: Display past orders
+@enduml 

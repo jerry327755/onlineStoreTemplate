@@ -1,0 +1,17 @@
+@startuml viewItem
+actor Customer
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Customer -> system: View Item
+activate system
+system -> auth: is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: view_item_details(item_id)
+activate pdb
+pdb --> system: Item Details
+deactivate pdb
+system -> system: Display item details
+@enduml 

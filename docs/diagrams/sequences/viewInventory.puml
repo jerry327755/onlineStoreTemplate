@@ -1,0 +1,17 @@
+@startuml viewInventory
+actor Manager
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Manager -> system: View Inventory
+activate system
+system -> auth: admin_is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: view_inventory()
+activate pdb
+pdb --> system: List of all current items and their details
+deactivate pdb
+system -> system: Display list of items and their quantity
+@enduml 

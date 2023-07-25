@@ -1,0 +1,17 @@
+@startuml listProducts
+actor Manager
+boundary "System" as system
+control "authentication" as auth 
+Database "Product Database" as pdb
+Manager -> system: View Products
+activate system
+system -> auth: admin_is_logged_in(username, udb)
+activate auth
+auth --> system: True
+deactivate auth
+system -> pdb: view_products_list()
+activate pdb
+pdb --> system: List of Products
+deactivate pdb
+system -> system: Display products in list
+@enduml 

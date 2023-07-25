@@ -1,18 +1,20 @@
-@startuml login
+@startuml logout
 actor User
 boundary "System" as system
 control "Sessions" as sessions
 control "Authentication" as auth
-User -> system: Login
+User -> system: Logout
 activate system
-system -> auth: login_pipeline(username, password)
+system -> auth: is_logged_in(username, udb)
 activate auth
 auth --> system: True
+system -> auth: logout_user(username)
+auth --> system: True
 deactivate auth
-system -> sessions: add_new_session(username, db)
+system -> sessions: remove_current_session(username, db)
 activate sessions
 sessions --> system: None
 deactivate sessions
-system -> system: redirect to home page
+system -> system: redirect to login
 deactivate system
 @enduml
