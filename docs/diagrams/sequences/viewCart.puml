@@ -1,0 +1,17 @@
+@startuml viewCart
+actor Customer
+boundary "System" as system
+control "authentication" as auth 
+Database "Database" as db 
+Customer -> system: View Cart
+activate system
+system -> auth: is_logged_in(username, db)
+activate auth
+auth --> system: True
+deactivate auth
+system -> db: view_user_cart(username)
+activate db
+db --> system: None
+deactivate db
+system -> system: Display current cart
+@enduml 
