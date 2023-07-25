@@ -1,21 +1,9 @@
-
-
 class Order:
-    
-    def __init__(self, items):
-        pass
-    
-    def get_items() -> list:
-        pass
-    
-    def add_item(item, amount):
-        pass
-    
-    def remove_item(item_id, amount):
-        pass
+    def __init__(self, product_list, id, customer):
+        self.product_list = product_list
+        self.id = id
+        self.customer = customer
 
-    def get_order_total() -> float:
-        pass
-    
-    def finalize_order():
-        pass
+    def __str__(self):
+        return f"Id: {self.id} Product List {self.product_list} Customer {self.customer}"
+ 
