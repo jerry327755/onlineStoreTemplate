@@ -1,0 +1,22 @@
+@startuml manager
+left to right direction
+actor Manager
+rectangle "System" as system {
+    (Login to Admin)
+    (Register as Admin)
+    (List Product)
+    (Remove Product)
+    (Edit Price)
+    (View Sales)
+    (View Inventory)
+    (Logout)
+}
+Manager --> (Login to Admin)
+Manager --> (Register as Admin)
+Manager --> (List Product)
+Manager --> (Remove Product)
+Manager --> (Edit Price)
+Manager --> (View Sales)
+Manager --> (View Inventory)
+Manager --> (Logout)
+@enduml

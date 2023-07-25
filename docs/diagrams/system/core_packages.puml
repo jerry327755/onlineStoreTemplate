@@ -2,6 +2,10 @@
 set namespaceSeparator none
 package "core" as core #aliceblue {
 }
+package "core.order" as core.order #aliceblue {
+}
+package "core.product" as core.product #aliceblue {
+}
 package "core.session" as core.session #aliceblue {
 }
 package "core.utils" as core.utils #aliceblue {
