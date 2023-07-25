@@ -1,5 +1,21 @@
 @startuml classes
 set namespaceSeparator none
+class "Order" as core.order.Order #aliceblue {
+  {abstract}add_item(amount)
+  {abstract}finalize_order()
+  {abstract}get_items() -> list
+  {abstract}get_order_total() -> float
+  {abstract}remove_item(amount)
+}
+class "Product" as core.product.Product #aliceblue {
+  {abstract}get_id() -> int
+  {abstract}get_inventory()
+  {abstract}get_name()
+  {abstract}get_price()
+  {abstract}set_inventory()
+  {abstract}set_name()
+  {abstract}set_price()
+}
 class "Sessions" as core.session.Sessions #aliceblue {
   sessions : dict
   add_new_session(username: str, db: Database) -> None
@@ -9,7 +25,7 @@ class "Sessions" as core.session.Sessions #aliceblue {
 }
 class "UserSession" as core.session.UserSession #aliceblue {
   cart : dict
-  date : datetime, NoneType
+  date : NoneType, datetime
   db : Database
   total_cost : int
   username : str

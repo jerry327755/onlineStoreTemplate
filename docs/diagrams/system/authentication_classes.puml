@@ -1,0 +1,19 @@
+@startuml classes
+set namespaceSeparator none
+class "Account" as authentication.accounts.Account #aliceblue {
+  {abstract}check_password() -> bool
+  {abstract}get_permission_level() -> int
+}
+class "AdminAccount" as authentication.accounts.AdminAccount #aliceblue {
+  get_permission_level() -> int
+}
+class "CustomerAccount" as authentication.accounts.CustomerAccount #aliceblue {
+  get_permission_level() -> int
+}
+class "ManagerAccount" as authentication.accounts.ManagerAccount #aliceblue {
+  get_permission_level() -> int
+}
+authentication.accounts.AdminAccount --|> authentication.accounts.Account
+authentication.accounts.CustomerAccount --|> authentication.accounts.Account
+authentication.accounts.ManagerAccount --|> authentication.accounts.Account
+@enduml
