@@ -120,3 +120,19 @@
     margin-bottom: 10px;
     text-align: center;
 }
+
+.header {
+    position: relative;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center; 
+    padding: 10px;
+}
+
+#filter_button {
+    width: 165px;
+    margin-left: 10px;
+}

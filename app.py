@@ -137,5 +137,30 @@ def checkout():
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
 
 
+@app.route('/home_filtered', methods=['POST'])
+def filter_by_price():
+    """
+    Filters the order of displayed products by price.
+
+    args:
+        - None
+
+    returns:
+        - None
+
+    modifies:
+        - home.html: changes the order in which the products are displayed to the user
+    """
+    
+    filtered_products = products    
+    sort_order = request.form.get('sort')
+
+    if sort_order == 'low_to_high':
+        filtered_products.sort(key=lambda x: x['price'])
+    elif sort_order == 'high_to_low':
+        filtered_products.sort(key=lambda x: x['price'], reverse=True)
+    
+    return render_template('home.html', products=filtered_products, sessions=sessions)
+
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)

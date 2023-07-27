@@ -4,8 +4,22 @@
 
 <div class="row" id="products_page">
     <div class="col-md-12">
-        <h3>Products</h3>
-        <hr>
+
+        <div class="header">
+            <div id="header-content">
+                <h3>Products</h3>              
+                    <form action="/home_filtered" method="post" style="display: inline;">
+                        <input type="hidden" name="sort" value="low_to_high">
+                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (Low to High)</button>
+                    </form>
+                    <form action="/home_filtered" method="post" style="display: inline;">
+                        <input type="hidden" name="sort" value="high_to_low">
+                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (High to Low)</button>
+                    </form>           
+            </div>
+            <hr>
+        </div>
+
         <div class="row">
             <form action="/checkout" method="post">
                 <div class="form-group">

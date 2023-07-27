@@ -26,7 +26,7 @@ INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `ca
 VALUES ('Pineapples', 'A tropical spiked fruit with a sour and sweet taste.', 5.00, 100, 'static/images/pineapple.jpeg', 'Fruit');
 
 INSERT into `inventory` (`item_name`, `info`, `price`, `stock`, `image_url`, `category`)
-VALUES ('Watermelon', 'Large green oval-shaped fruit with a soft red inside.', 1.00, 100, 'static/images/watermelon.jpeg', 'Fruit');
+VALUES ('Watermelon', 'Large green oval-shaped fruit with a soft red inside.', 10.00, 100, 'static/images/watermelon.jpeg', 'Fruit');
 
 INSERT into `sales` (`transaction_id`, `username`, `item_id`, `quantity`, `sale_date`, `cost`)
 VALUES ('1', 'aturing', '1', 10, '2022-12-21 7:30:30', 5.50);
