@@ -45,7 +45,7 @@
     width: 302px;
     background-color: #cac2c2;
     border: 1px solid rgb(178, 178, 178);
-    height: 500px;
+    height: 530px;
 }
 
 .product_card-img {
@@ -69,6 +69,10 @@
     margin-bottom: 10px;
     font-style: italic;
     height: 60px;
+}
+
+.product_card-stock {
+    text-align: center;
 }
 
 .product_card-price {

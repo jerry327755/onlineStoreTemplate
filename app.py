@@ -131,6 +131,8 @@ def checkout():
             order[item['item_name']] = count
             user_session.add_new_item(
                 item['id'], item['item_name'], item['price'], count)
+            db.set_item_stock(item['id'], item['stock'] - int(count))
+        
 
     user_session.submit_cart()
 
@@ -140,16 +142,13 @@ def checkout():
 @app.route('/home_filtered', methods=['POST'])
 def filter_by_price():
     """
-    Filters the order of displayed products by price.
+    Renders the home page when the user is at the '/home' endpoint, filters the products based on price.
 
     args:
         - None
 
     returns:
         - None
-
-    modifies:
-        - home.html: changes the order in which the products are displayed to the user
     """
     
     filtered_products = products    
@@ -160,7 +159,7 @@ def filter_by_price():
     elif sort_order == 'high_to_low':
         filtered_products.sort(key=lambda x: x['price'], reverse=True)
     
-    return render_template('home.html', products=filtered_products, sessions=sessions)
+    return render_template('home.html', username=username, products=filtered_products, sessions=sessions)
 
 @app.route('/Fruits')
 def fruits_page():
