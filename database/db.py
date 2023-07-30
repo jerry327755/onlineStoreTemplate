@@ -246,6 +246,18 @@ class Database:
             "UPDATE inventory SET category = ? WHERE id = ?", (new_category, item_id))
         self.connection.commit()
 
+    def get_items_by_category(self, category:str):
+        """
+        Gets Items filtered by category
+        args:
+            -category: item category to fetch from database
+        returns:
+            -items
+        """
+        self.cursor.execute('SELECT * FROM inventory WHERE category = ?', (category,))
+        return self.cursor.fetchall()
+
+
     # --------------------------------------------
     # ------------------ Users -------------------
     # --------------------------------------------
