@@ -7,19 +7,28 @@
         <a href="/register" class="btn btn-primary" id="register_button">Register</a>
     </div>
 </div>
-<div class="dropdown">
-  <button class="dropbtn">Product Category</button>
-  <div class="dropdown-content">
-    <a href="/Fruits">Fruits</a>
-    <a href="/Vegetables">Vegetables</a>
-    <a href="/Seeds">Seeds</a>
-    <a href="/Dairy">Dairy</a>
-  </div>
-</div>
+
 <div class="row" id="products_page">
     <div class="col-md-12">
         <h3>Products</h3>
         <hr>
+        <div class="dropdown">
+            <button class="dropbtn">Product Category</button>
+            <div class="dropdown-content">
+                <a href="/Fruits">Fruits</a>
+                <a href="/Vegetables">Vegetables</a>
+                <a href="/Seeds">Seeds</a>
+                <a href="/Dairy">Dairy</a>
+            </div>
+        </div>
+        <form action="/home_filtered" method="post" style="display: inline;">
+            <input type="hidden" name="sort" value="low_to_high">
+            <button type="submit" class="btn btn-primary" id="filter_button">Filter (Low to High)</button>
+        </form>
+        <form action="/home_filtered" method="post" style="display: inline;">
+            <input type="hidden" name="sort" value="high_to_low">
+            <button type="submit" class="btn btn-primary" id="filter_button">Filter (High to Low)</button>
+        </form>
         <div class="row">
             <form action="/checkout" method="post">
                 <div class="form-group">
@@ -32,7 +41,10 @@
                                     <div class="product_card-body">
                                         <h5 class="product_card-title">{{ product.item_name }}</h5>
                                         <p class="product_card-text">{{ product.info }}</p>
+                                        <p class="product_card-stock">Stock: {{ product.stock }}</p>
                                         <p class="product_card-price">${{ product.price }}</p>
+                                         <input type="number" class="quantity" id={{product.id}} name={{product.id}}
+                                        placeholder="0">
                                     </div>
                                 </div>
                             </div>
@@ -40,6 +52,9 @@
                         {% endfor %}
                     </div>
                 </div>
+                  <div class="col-md-12" id="index_buttons">
+                        <button type="submit" class="btn btn-primary" id="checkout_button">Order</button>
+                    </div>
             </form>
         </div>
     </div>

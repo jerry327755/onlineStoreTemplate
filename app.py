@@ -7,13 +7,20 @@ from core.session import Sessions
 
 app = Flask(__name__)
 HOST, PORT = 'localhost', 8080
-global username, products, db, sessions
+global username, products, db, sessions, logged_in
 username = 'default'
 db = Database('database/store_records.db')
 products = db.get_full_inventory()
 sessions = Sessions()
 sessions.add_new_session(username, db)
 
+
+def log_out():
+    global logged_in
+    logged_in = False
+
+
+log_out()
 
 @app.route('/')
 def index_page():
@@ -26,6 +33,8 @@ def index_page():
     returns:
         - None
     """
+
+
     return render_template('index.html', username=username, products=products, sessions=sessions)
 
 
@@ -62,10 +71,17 @@ def login():
     password = request.form['password']
     if login_pipeline(username, password):
         sessions.add_new_session(username, db)
+        logged_session()
         return render_template('home.html', products=products, sessions=sessions)
     else:
         print(f"Incorrect username ({username}) or password ({password}).")
         return render_template('index.html')
+
+
+def logged_session():
+    global logged_in
+    logged_in=True
+
 
 
 @app.route('/register')
@@ -158,8 +174,10 @@ def filter_by_price():
         filtered_products.sort(key=lambda x: x['price'])
     elif sort_order == 'high_to_low':
         filtered_products.sort(key=lambda x: x['price'], reverse=True)
-    
-    return render_template('home.html', username=username, products=filtered_products, sessions=sessions)
+    if not logged_in:
+        return render_template('index.html', username=username, products=filtered_products, sessions=sessions)
+    else:
+        return render_template('home.html', username=username, products=filtered_products, sessions=sessions)
 
 @app.route('/Fruits')
 def fruits_page():
@@ -173,7 +191,11 @@ def fruits_page():
         - None
     """
     fruits=db.get_items_by_category('Fruit')
-    return render_template('index.html', username=username, products=fruits, sessions=sessions)
+    if not logged_in:
+        return render_template('index.html', username=username, products=fruits, sessions=sessions)
+    else:
+        return render_template('home.html', username=username, products=fruits, sessions=sessions)
+
 @app.route('/Vegetables')
 def vegetables_page():
     """
@@ -186,7 +208,11 @@ def vegetables_page():
         - None
     """
     vegetables=db.get_items_by_category('Vegetables')
-    return render_template('index.html', username=username, products=vegetables, sessions=sessions)
+
+    if not logged_in:
+        return render_template('index.html', username=username, products=vegetables, sessions=sessions)
+    else:
+        return render_template('home.html', username=username, products=vegetables, sessions=sessions)
 @app.route('/Seeds')
 def seeds_page():
     """
@@ -199,7 +225,11 @@ def seeds_page():
         - None
     """
     seeds=db.get_items_by_category('Seeds')
-    return render_template('index.html', username=username, products=seeds, sessions=sessions)
+
+    if not logged_in:
+        return render_template('index.html', username=username, products=seeds, sessions=sessions)
+    else:
+        return render_template('home.html', username=username, products=seeds, sessions=sessions)
 @app.route('/Dairy')
 def dairy_page():
     """
@@ -211,8 +241,13 @@ def dairy_page():
     returns:
         - None
     """
+
     dairy=db.get_items_by_category('Dairy')
-    return render_template('index.html', username=username, products=dairy, sessions=sessions)
+
+    if not logged_in:
+        return render_template('index.html', username=username, products=dairy, sessions=sessions)
+    else:
+        return render_template('home.html', username=username, products=dairy, sessions=sessions)
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
