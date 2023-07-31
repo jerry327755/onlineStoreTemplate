@@ -41,10 +41,17 @@
                                     <div class="product_card-body">
                                         <h5 class="product_card-title">{{ product.item_name }}</h5>
                                         <p class="product_card-text">{{ product.info }}</p>
-                                        <p class="product_card-stock">Stock: {{ product.stock }}</p>
-                                        <p class="product_card-price">${{ product.price }}</p>
-                                         <input type="number" class="quantity" id={{product.id}} name={{product.id}}
-                                        placeholder="0">
+                                        {% if product.stock < 1 %}
+                                            <p class="product_card-stock">Out of Stock</p>
+                                            <p class="product_card-price">${{ product.price }}</p>
+                                            <input type="number" class="quantity" id={{product.id}} name={{product.id}}
+                                            placeholder="0" style="visibility: hidden;">
+                                        {% else %}
+                                            <p class="product_card-stock">Stock: {{ product.stock }}</p>
+                                            <p class="product_card-price">${{ product.price }}</p>
+                                            <input type="number" class="quantity" id={{product.id}} name={{product.id}}
+                                            placeholder="0">
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -139,6 +139,7 @@ def checkout():
         - sessions: adds items to the user's cart
     """
     order = {}
+    checkout_info = []
     user_session = sessions.get_session(username)
     for item in products:
         print(f"item ID: {item['id']}")
@@ -148,17 +149,19 @@ def checkout():
             user_session.add_new_item(
                 item['id'], item['item_name'], item['price'], count)
             db.set_item_stock(item['id'], item['stock'] - int(count))
+            checkout_info.append({'item_name': item['item_name'], 'quantity': count, 'price': item['price'], 'total_price': item['price'] * int(count)})
         
 
     user_session.submit_cart()
+    
 
-    return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost)
+    return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost, products=checkout_info)
 
 
 @app.route('/home_filtered', methods=['POST'])
 def filter_by_price():
     """
-    Renders the home page when the user is at the '/home' endpoint, filters the products based on price.
+    Renders the home page when the user is at the '/' and '/home' endpoints, filters the products based on price.
 
     args:
         - None

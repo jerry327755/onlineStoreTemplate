@@ -11,11 +11,11 @@
                 <h3>Products</h3>              
                     <form action="/home_filtered" method="post" style="display: inline;">
                         <input type="hidden" name="sort" value="low_to_high">
-                        <button type="submit" class="btn btn-primary" id="filter_button">Sort (Low to High)</button>
+                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (Low to High)</button>
                     </form>
                     <form action="/home_filtered" method="post" style="display: inline;">
                         <input type="hidden" name="sort" value="high_to_low">
-                        <button type="submit" class="btn btn-primary" id="filter_button">Sort (High to Low)</button>
+                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (High to Low)</button>
                     </form>           
             </div>
 
@@ -42,10 +42,17 @@
                                 <div class="product_card-body">
                                     <h5 class="product_card-title">{{ product.item_name }}</h5>
                                     <p class="product_card-text">{{ product.info }}</p>
-                                    <p class="product_card-stock">Stock: {{ product.stock }}</p>
-                                    <p class="product_card-price">${{ product.price }}</p>
-                                    <input type="number" class="quantity" id={{product.id}} name={{product.id}}
+                                    {% if product.stock < 1 %}
+                                        <p class="product_card-stock">Out of Stock</p>
+                                        <p class="product_card-price">${{ product.price }}</p>
+                                        <input type="number" class="quantity" id={{product.id}} name={{product.id}}
+                                        placeholder="0" style="visibility: hidden;">
+                                    {% else %}
+                                        <p class="product_card-stock">Stock: {{ product.stock }}</p>
+                                        <p class="product_card-price">${{ product.price }}</p>
+                                        <input type="number" class="quantity" id={{product.id}} name={{product.id}}
                                         placeholder="0">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
