@@ -1,3 +1,7 @@
+body {
+    background: #C5E1A5;
+}
+
 #index_buttons {
     padding-top: 15px;
     margin: 0 auto;
@@ -46,6 +50,7 @@
     background-color: #cac2c2;
     border: 1px solid rgb(178, 178, 178);
     height: 530px;
+    box-shadow: 10px 10px 5px grey;
 }
 
 .product_card-img {
@@ -132,7 +137,6 @@
 
 .header-content {
     display: flex;
-    align-items: center; 
     padding: 10px;
 }
 

@@ -14,27 +14,27 @@
         <div class="header">
             <div id="header-content">
                 <h1>Welcome!</h1>
-                <h3>Products</h3>              
-                    <form action="/home_filtered" method="post" style="display: inline;">
-                        <input type="hidden" name="sort" value="low_to_high">
-                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (Low to High)</button>
-                    </form>
-                    <form action="/home_filtered" method="post" style="display: inline;">
-                        <input type="hidden" name="sort" value="high_to_low">
-                        <button type="submit" class="btn btn-primary" id="filter_button">Filter (High to Low)</button>
-                    </form>           
-            </div>
-
-        </div>
-          <div class="dropdown">
-            <button class="dropbtn">Product Category</button>
-            <div class="dropdown-content">
-                <a href="/Fruits">Fruits</a>
-                <a href="/Vegetables">Vegetables</a>
-                <a href="/Seeds">Seeds</a>
-                <a href="/Dairy">Dairy</a>
+                <h3>Products</h3>
+                <div class="dropdown">
+                    <button class="dropbtn">Product Category</button>
+                    <div class="dropdown-content">
+                        <a href="/Fruits">Fruits</a>
+                        <a href="/Vegetables">Vegetables</a>
+                        <a href="/Seeds">Seeds</a>
+                        <a href="/Dairy">Dairy</a>
+                    </div>
+                </div>          
+                <form action="/home_filtered" method="post" style="display: inline;">
+                    <input type="hidden" name="sort" value="low_to_high">
+                    <button type="submit" class="btn btn-primary" id="filter_button">Filter (Low to High)</button>
+                </form>
+                <form action="/home_filtered" method="post" style="display: inline;">
+                    <input type="hidden" name="sort" value="high_to_low">
+                    <button type="submit" class="btn btn-primary" id="filter_button">Filter (High to Low)</button>
+                </form>     
             </div>
             <hr>
+
         </div>
 
         <div class="row">
