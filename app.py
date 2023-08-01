@@ -207,11 +207,12 @@ def fruits_page():
     returns:
         - None
     """
-    fruits=db.get_items_by_category('Fruit')
+    global products
+    products=db.get_items_by_category('Fruit')
     if not logged_in:
-        return render_template('index.html', username=username, products=fruits, sessions=sessions)
+        return render_template('index.html', username=username, products=products, sessions=sessions)
     else:
-        return render_template('home.html', username=username, products=fruits, sessions=sessions)
+        return render_template('home.html', username=username, products=products, sessions=sessions)
 
 @app.route('/Vegetables')
 def vegetables_page():
@@ -224,12 +225,13 @@ def vegetables_page():
     returns:
         - None
     """
-    vegetables=db.get_items_by_category('Vegetables')
+    global products
+    products=db.get_items_by_category('Vegetable')
 
     if not logged_in:
-        return render_template('index.html', username=username, products=vegetables, sessions=sessions)
+        return render_template('index.html', username=username, products=products, sessions=sessions)
     else:
-        return render_template('home.html', username=username, products=vegetables, sessions=sessions)
+        return render_template('home.html', username=username, products=products, sessions=sessions)
 @app.route('/Seeds')
 def seeds_page():
     """
@@ -241,12 +243,13 @@ def seeds_page():
     returns:
         - None
     """
-    seeds=db.get_items_by_category('Seeds')
+    global products
+    products=db.get_items_by_category('Seeds')
 
     if not logged_in:
-        return render_template('index.html', username=username, products=seeds, sessions=sessions)
+        return render_template('index.html', username=username, products=products, sessions=sessions)
     else:
-        return render_template('home.html', username=username, products=seeds, sessions=sessions)
+        return render_template('home.html', username=username, products=products, sessions=sessions)
 @app.route('/Dairy')
 def dairy_page():
     """
@@ -258,13 +261,13 @@ def dairy_page():
     returns:
         - None
     """
-
-    dairy=db.get_items_by_category('Dairy')
+    global products
+    products=db.get_items_by_category('Dairy')
 
     if not logged_in:
-        return render_template('index.html', username=username, products=dairy, sessions=sessions)
+        return render_template('index.html', username=username, products=products, sessions=sessions)
     else:
-        return render_template('home.html', username=username, products=dairy, sessions=sessions)
+        return render_template('home.html', username=username, products=products, sessions=sessions)
 
 if __name__ == '__main__':
     app.run(debug=True, host=HOST, port=PORT)
