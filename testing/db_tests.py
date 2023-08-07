@@ -86,3 +86,32 @@ def test_check_connection_threaded(db: Database = None) -> tuple:
         return False, error
     else:
         return True, "Connection is not single threaded."
+    
+def test_stock_filtered(db: Database = None) -> tuple:
+    """
+    Tests that the stock has been filtered from low-to-high and high-to-low.
+
+    args:
+        - db: an sqlite3 database object (optional)
+
+    returns:
+        - error_report: a tuple containing a boolean and a string,
+    """
+    db = Database("database/store_records.db") if db is None else db
+    
+    products = db.get_full_inventory()  
+    low_to_high = sorted(products, key=lambda x: x['price'])
+    high_to_low = sorted(products, key=lambda x: x['price'], reverse=True)
+    
+    for i in range(len(low_to_high) - 1):
+        if low_to_high[i]['price'] > low_to_high[i + 1]['price']:
+            error = f"Error in test_stock_filtered: Low_to_high stock is not filtered.\n  - Actual: False"
+            return False, error
+        
+    for i in range(len(high_to_low) - 1):
+        if high_to_low[i]['price'] < high_to_low[i + 1]['price']:
+            error = f"Error in test_stock_filtered: High_to_low stock is not filtered.\n  - Actual: False"
+            return False, error
+        
+    return True, "Stock is filtered successfully."
+        
