@@ -1,0 +1,68 @@
+# Testing Review
+
+## Tests Reviewed
+
+- **Test Source File:** [tests/db_tests.py](../../tests/db_tests.py)
+  - **Test Function Name:** `test_init_db`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems fine, checks if database path matches the expected database path
+  - **Test Function Name:** `test_get_inventory_exists`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, it gets the inventory and makes sure its length is not equal to zero, making sure that getting the inventory gets something.
+  - **Test Function Name:** `test_dict_factory_link`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This is good, it compares the row factory to the expected value of dict_factory
+  - **Test Function Name:** `test_check_connection_threaded`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This is valid, it verifys the conncetion isolation level is None
+  - **Test Function Name:** `test_stock_filtered`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This is good, it sorts the products using the same method as in the app and then verifys the order is correct.
+- **Test Source File:** [tests/db_myTest.py](../../tests/db_myTest.py)
+  - **Test Function Name:** `test_product_categories`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems fine, it checks the products in each category and verifys that the product belongs to that category. The only change would maybe be to independently test each category rather than have them all run together.
+- **Test Source File:** [tests/core_tests.py](../../tests/core_tests.py)
+  - **Test Function Name:** `test_init_session`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, very straightfoward to check if session was initialized correctly and the dictionary is empty on creation.
+  - **Test Function Name:** `test_add_new_session`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems fine, it uses the add_new_session method and then checks if the sessions dictionary is nonempty.
+  - **Test Function Name:** `test_get_session`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems fine, it adds a session then uses get_session method and then checks if it is an instance of UserSession
+  - **Test Function Name:** `test_get_session_username`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, builds on the last test by adding a session, getting it, and then verifying the username matchs what is expected.
+  - **Test Function Name:** `test_get_session_db`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, similar to the last test, it adds a session, gets it, and then verifys the db matchs what is expected.
+- **Test Source File:** [tests/auth_tests.py](../../tests/auth_tests.py)
+  - **Test Function Name:** `test_hash_password_generates_salt`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, very straightfoward to check if the hash_password function would generate a salt when not given one.
+  - **Test Function Name:** `test_salt_length`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, very straightfoward to check if the generated salt is the correct length of 32 characters.
+  - **Test Function Name:** `test_hash_password_returns_given_salt`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, it checks the hash_password function again but this time with a given generated salt and then compares the hashs salt and the given salt to see if they match. 
+  - **Test Function Name:** `test_hash_password_uses_given_salt`
+    - **Date Reviewed:** 08/07/2023
+    - **Comments:**
+      - This seems good, very straightfoward to see if different hashes are created by the hash_password function when it is given the same password and salt.
