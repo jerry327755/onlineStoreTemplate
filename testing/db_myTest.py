@@ -1,6 +1,6 @@
 from database.db import Database
 class db_myTest:
-    def test_product_categories(self):
+    def test_product_category(self):
         FRUITS = 'Fruit'
         VEGETABLES = 'Vegetables'
         SEEDS =  'Seeds'
@@ -26,7 +26,7 @@ class db_myTest:
 
 
 my_test=db_myTest()
-my_test.test_product_categories()
+my_test.test_product_category()
     
     
             
