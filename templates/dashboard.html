@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <h1>Welcome {{username}}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <a href="/" class="btn btn-primary" id="back_btn">Back to Shop</a>
+  </div>
+</div>
+<div class="row align-items-center">
+  <div class="col-md-12" id="reset_pw_class">
+    <h2>Reset Password</h2>
+    <form action="/dashboard" method="post" id="login_form">
+      <div class="form-group" id="info_form_group">
+        <label for="prev-password">Current Password</label>
+        <input type="password" class="form-control" id="prev-password" name="prev-password" placeholder="Enter current password">
+      </div>
+      <div class="form-group" id="info_form_group">
+        <label for="new-password">New Password</label>
+        <input type="password" class="form-control" id="new-password" name="new-password" placeholder="Enter new password">
+      </div>
+      <button type="submit" class="btn btn-primary" id="login_button">Login</button>
+    </form>
+    {% if failed_reset %}
+    <p>Failed to reset password. Check that you correctly entered your current password and try again.</p> 
+    {% endif %}
+    {% if successful_reset %}
+    <p>Successfully reset password.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

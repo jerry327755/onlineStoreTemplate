@@ -17,6 +17,8 @@ sessions.add_new_session(username, db)
 
 def log_out():
     global logged_in
+    global username
+    username = "default"
     logged_in = False
 
 
@@ -34,7 +36,9 @@ def index_page():
         - None
     """
 
-
+    if logged_in:
+        return render_template('home.html', username=username, products=products, sessions=sessions)
+    
     return render_template('index.html', username=username, products=products, sessions=sessions)
 
 
@@ -66,6 +70,51 @@ def logout_page():
     return redirect(url_for('index_page'))
 
 
+@app.route('/dashboard')
+def dashboard():
+    """
+    If the user is logged in, shows account dashboard. Otherwise, redirects to index.
+
+    args:
+        - None
+
+    returns:
+        - None
+    """
+
+    if logged_in:
+        return render_template('dashboard.html', username=username)
+    else:
+        print("Attempted to access account dashboard while not logged in, redirecting...")
+        return redirect(url_for('index_page'))
+
+@app.route('/dashboard', methods=['POST'])
+def reset_password():
+    """
+    Handles reset password request.
+
+    modifies:
+        - passwords.txt: updates user password hash/salt
+        - database: updates user password hash on success.
+    """
+
+    if not logged_in:
+        print("Error, tried to reset password while not logged in.")
+        return redirect(url_for('index_page'))
+    else:
+        global username
+        old_password = request.form['prev-password']
+        new_password = request.form['new-password']
+        if login_pipeline(username, old_password):
+            print(f"Updating password for user {username}")
+            salt, key = hash_password(new_password)
+            update_passwords(username, key, salt)
+            db.set_password_hash(username, key)
+            return render_template('dashboard.html', username=username, successful_reset=True)
+        else:
+            print("Error, tried to reset password, but gave incorrect current password.")
+            return render_template('dashboard.html', username=username, failed_reset=True)
+
 @app.route('/home', methods=['POST'])
 def login():
     """
@@ -81,11 +130,13 @@ def login():
         - sessions: adds a new session to the sessions object
 
     """
+    global username 
     username = request.form['username']
     password = request.form['password']
     if login_pipeline(username, password):
         sessions.add_new_session(username, db)
         logged_session()
+        print(f"Logged in as user: {username}")
         return render_template('home.html', products=products, sessions=sessions)
     else:
         print(f"Incorrect username ({username}) or password ({password}).")
@@ -127,6 +178,7 @@ def register():
         - passwords.txt: adds a new username and password combination to the file
         - database/store_records.db: adds a new user to the database
     """
+    global username 
     username = request.form['username']
     password = request.form['password']
     email = request.form['email']
