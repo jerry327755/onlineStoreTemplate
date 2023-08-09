@@ -2,10 +2,11 @@
 
 from authentication.auth_tools import login_pipeline, update_passwords, hash_password
 from database.db import Database
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from core.session import Sessions
 
 app = Flask(__name__)
+app.secret_key = '\x14*\xbax&\x97\xe8\xa9\xd0\xa6-\xa3\xa6\xee\xc4\xebt\x9c\x9b\xce\xf1\xe2\xa9\xbf'
 HOST, PORT = 'localhost', 8080
 global username, products, db, sessions, logged_in
 username = 'default'
@@ -67,6 +68,7 @@ def logout_page():
         - None
     """
     log_out()
+    session.pop('username', None)
     return redirect(url_for('index_page'))
 
 
@@ -83,7 +85,7 @@ def dashboard():
     """
 
     if logged_in:
-        return render_template('dashboard.html', username=username)
+        return render_template('dashboard.html', username=session['username'])
     else:
         print("Attempted to access account dashboard while not logged in, redirecting...")
         return redirect(url_for('index_page'))
@@ -102,7 +104,7 @@ def reset_password():
         print("Error, tried to reset password while not logged in.")
         return redirect(url_for('index_page'))
     else:
-        global username
+        username = session['username']
         old_password = request.form['prev-password']
         new_password = request.form['new-password']
         if login_pipeline(username, old_password):
@@ -130,8 +132,8 @@ def login():
         - sessions: adds a new session to the sessions object
 
     """
-    global username 
     username = request.form['username']
+    session['username'] = username
     password = request.form['password']
     if login_pipeline(username, password):
         sessions.add_new_session(username, db)
