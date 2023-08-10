@@ -209,6 +209,9 @@ def checkout():
     order = {}
     checkout_info = []
     user_session = sessions.get_session(username)
+    if products == 0:
+        user_session.empty_cart()
+        print("we emptied cart")
     for item in products:
         print(f"item ID: {item['id']}")
         if request.form[str(item['id'])] > '0':
@@ -221,7 +224,8 @@ def checkout():
         
 
     user_session.submit_cart()
-    
+    user_session.cart= user_session.empty_cart()
+
 
     return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost, products=checkout_info)
 
