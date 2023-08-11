@@ -20,7 +20,7 @@ def dict_factory(cursor: sqlite3.Cursor, row: tuple) -> dict:
     return row_dict
 
 
-def calculate_cost(price: int, quantity: int, discount: float = 0.0, tax_rate: float = 0.05) -> float:
+def calculate_cost(price: int, quantity: int, discount: float = 0.0, tax_rate: float = 0.05) -> list:
     """
     Calculates the cost of an item.
 
@@ -33,10 +33,10 @@ def calculate_cost(price: int, quantity: int, discount: float = 0.0, tax_rate: f
     returns:
         - The cost of the item as a float.
     """
-    return (price * quantity) * (1 - discount) * (1 + tax_rate)
+    return [(price * quantity) * (1 - discount) * (tax_rate), (price * quantity) * (1 - discount)]
 
 
-def calculate_total_cost(items: dict) -> float:
+def calculate_total_cost(items: dict) -> list:
     """
     Calculates the total cost of a set of items.
 
@@ -46,13 +46,15 @@ def calculate_total_cost(items: dict) -> float:
     returns:
         - The total cost of the sale as a float.
     """
-    total_cost = 0
-    print(items)
+    subtotal = 0
+    tax = 0
     for i in items:
         item = items[i]
-        total_cost += calculate_cost(float(item["price"]), int(item["quantity"]),
-                                     float(item["discount"]), int(item["tax_rate"]))
-    return total_cost
+        totals = calculate_cost(float(item["price"]), int(item["quantity"]),
+                                     float(item["discount"]), float(item["tax_rate"]))
+        tax += totals[0]
+        subtotal += totals[1]
+    return [subtotal, tax, subtotal + tax]
 
 
 def generate_unique_id() -> str:

@@ -139,10 +139,10 @@ def login():
         sessions.add_new_session(username, db)
         logged_session()
         print(f"Logged in as user: {username}")
-        return render_template('home.html', products=products, sessions=sessions)
+        return render_template('home.html', username=username, products=products, sessions=sessions)
     else:
         print(f"Incorrect username ({username}) or password ({password}).")
-        return render_template('index.html')
+        return render_template('index.html', username=username, products=products, sessions=sessions)
 
 
 def logged_session():
@@ -189,7 +189,16 @@ def register():
     salt, key = hash_password(password)
     update_passwords(username, key, salt)
     db.insert_user(username, key, email, first_name, last_name)
-    return render_template('index.html')
+    if login_pipeline(username, password):
+        session['username'] = username
+        sessions.add_new_session(username, db)
+        logged_session()
+        print(f"Logged in as user: {username}")
+        return render_template('home.html', username=username, products=products, sessions=sessions)
+    else:
+        print(f"Unable to log in at this time.")
+        return render_template('index.html', username=username, products=products, sessions=sessions)
+    
 
 
 @app.route('/checkout', methods=['POST'])
@@ -220,14 +229,14 @@ def checkout():
             user_session.add_new_item(
                 item['id'], item['item_name'], item['price'], count)
             db.set_item_stock(item['id'], item['stock'] - int(count))
-            checkout_info.append({'item_name': item['item_name'], 'quantity': count, 'price': item['price'], 'total_price': item['price'] * int(count)})
+            checkout_info.append({'item_name': item['item_name'], 'quantity': count, 'price': item['price'], 'total_price': "%.2f"%(item['price'] * int(count))})
         
 
     user_session.submit_cart()
     user_session.cart= user_session.empty_cart()
 
 
-    return render_template('checkout.html', order=order, sessions=sessions, total_cost=user_session.total_cost, products=checkout_info)
+    return render_template('checkout.html', order=order, sessions=sessions, total_cost= "%.2f"%user_session.total_cost, tax = "%.2f"%user_session.tax, subtotal = "%.2f"%user_session.subtotal, products=checkout_info)
 
 
 @app.route('/home_filtered', methods=['POST'])

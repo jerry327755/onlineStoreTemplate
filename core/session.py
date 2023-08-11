@@ -21,6 +21,8 @@ class UserSession:
 
     def __init__(self, username: str, db: Database):
         self.username = username
+        self.tax = 0
+        self.subtotal = 0
         self.total_cost = 0
         self.date = None
         self.db = db
@@ -99,7 +101,10 @@ class UserSession:
         """
         Updates the total cost of the user's cart.
         """
-        self.total_cost = calculate_total_cost(self.cart)
+        totals = calculate_total_cost(self.cart)
+        self.subtotal = totals[0]
+        self.tax = totals[1]
+        self.total_cost = totals[2]
 
     def submit_cart(self) -> None:
         """

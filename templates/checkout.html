@@ -11,6 +11,9 @@
                 <p>{{ product.quantity }} {{ product.item_name }}: ${{ product.total_price }}</p>
             {% endfor %}
             <hr>
+            <p>Sub Total: ${{ subtotal }} </p>
+            <p>Tax: ${{ tax }} </p>
+            <hr>
             <p>Total Cost: ${{ total_cost }} </p>
         </div>
     </div>
